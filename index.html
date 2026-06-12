@@ -432,7 +432,7 @@ html, body {
   outline: none;
 }
 .coin-menu-search::placeholder { color: var(--text3); }
-.coin-menu-list { max-height: 320px; overflow-y: auto; }
+.coin-menu-list { max-height: 320px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .cmi {
   display: flex; align-items: center; gap: 10px; padding: 9px 14px;
   cursor: pointer; transition: background .1s; border-bottom: 1px solid var(--border);
@@ -600,8 +600,8 @@ html, body {
   .tf-btn { min-height: 36px; padding: 5px 10px; font-size: 10px; }
   .card-hdr { padding: 10px 14px; min-height: 40px; }
 
-  /* ── Coin dropdown: full-width panel ── */
-  .coin-menu { left: 0 !important; transform: none !important; width: calc(100vw - 28px) !important; }
+  /* ── Coin dropdown: full-width handled dynamically by toggleCoinMenu() ── */
+  .coin-select-wrap { flex-shrink: 0; }
   .coin-select-btn { padding: 6px 10px; gap: 8px; }
   .cs-sep { display: none; }
 
@@ -2560,11 +2560,30 @@ function toggleCoinMenu(){
   const menu=document.getElementById('coinMenu');
   const btn=document.getElementById('coinSelectBtn');
   const isOpen=menu?.classList.contains('open');
-  if(isOpen){menu?.classList.remove('open');btn?.classList.remove('open');}
-  else{
-    menu?.classList.add('open');btn?.classList.add('open');
+  if(isOpen){
+    menu?.classList.remove('open');
+    btn?.classList.remove('open');
+    // Reset inline styles
+    if(menu){ menu.style.position=''; menu.style.top=''; menu.style.left='';
+      menu.style.right=''; menu.style.width=''; menu.style.maxHeight=''; }
+  } else {
+    menu?.classList.add('open');
+    btn?.classList.add('open');
+    // On mobile: fix dropdown to viewport so it's never clipped
+    if(menu && window.innerWidth<=480){
+      const hdr=document.querySelector('.header');
+      const hdrBottom=hdr?hdr.getBoundingClientRect().bottom:130;
+      menu.style.position='fixed';
+      menu.style.top=(hdrBottom+6)+'px';
+      menu.style.left='14px';
+      menu.style.right='14px';
+      menu.style.width='auto';
+      menu.style.maxHeight=(window.innerHeight-hdrBottom-40)+'px';
+      menu.style.overflowY='auto';
+      menu.style.webkitOverflowScrolling='touch';
+    }
     renderCoinMenuList();
-    document.getElementById('coinSearch')?.focus();
+    setTimeout(()=>document.getElementById('coinSearch')?.focus(),50);
   }
 }
 
