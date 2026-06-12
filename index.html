@@ -540,16 +540,33 @@ html, body {
     padding: 0 14px max(20px, calc(env(safe-area-inset-bottom) + 12px));
   }
 
-  /* ── Header: compact ── */
+  /* ── Header: two-row layout ── */
+  .header {
+    flex-wrap: wrap;
+    justify-content: flex-start;   /* override desktop space-between */
+    gap: 0;
+    padding-bottom: 12px;
+  }
+  /* Row 1: brand mark + name, full width, centered */
+  .header-brand {
+    flex-basis: 100%;
+    justify-content: center;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
   .brand-mark { width: 26px; height: 26px; font-size: 11px; }
-  .brand-name { font-size: 13px; }
-  .brand-sub { display: none; }
-  .header-brand { gap: 10px; }
+  .brand-name { font-size: 14px; }
+  .brand-sub  { display: none; }
+  /* Row 2: coin selector + buttons, left-aligned */
+  .coin-select-wrap { flex-shrink: 0; }
+  .header-right { margin-left: 8px; gap: 6px; }
   .price-val { font-size: 16px; letter-spacing: -.01em; }
-  .price-arrow { display: none; }   /* hide direction arrow in coin button */
-  .price-chg { display: none; }     /* hide 24h change — too wide on mobile */
-  .cs-sep { display: none; }        /* hide separator between sym and price */
-  .scan-badge { display: none; }
+  .price-arrow { display: none; }
+  .price-chg   { display: none; }
+  .cs-sep      { display: none; }
+  .scan-badge  { display: none; }
   .hbtn { padding: 5px 10px; font-size: 10px; min-height: 34px; }
   #narrativeBtn { display: none; }
 
