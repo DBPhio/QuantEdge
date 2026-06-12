@@ -2565,7 +2565,8 @@ function toggleCoinMenu(){
     btn?.classList.remove('open');
     // Reset inline styles
     if(menu){ menu.style.position=''; menu.style.top=''; menu.style.left='';
-      menu.style.right=''; menu.style.width=''; menu.style.maxHeight=''; }
+      menu.style.right=''; menu.style.width=''; menu.style.maxHeight='';
+      menu.style.transform=''; }
   } else {
     menu?.classList.add('open');
     btn?.classList.add('open');
@@ -2578,6 +2579,7 @@ function toggleCoinMenu(){
       menu.style.left='14px';
       menu.style.right='14px';
       menu.style.width='auto';
+      menu.style.transform='none';
       menu.style.maxHeight=(window.innerHeight-hdrBottom-40)+'px';
       menu.style.overflowY='auto';
       menu.style.webkitOverflowScrolling='touch';
