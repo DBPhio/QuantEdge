@@ -600,9 +600,10 @@ html, body {
   .tf-btn { min-height: 36px; padding: 5px 10px; font-size: 10px; }
   .card-hdr { padding: 10px 14px; min-height: 40px; }
 
-  /* ── Coin dropdown: full-width handled dynamically by toggleCoinMenu() ── */
+  /* ── Coin dropdown: hide search on mobile, scroll the 15-coin list instead ── */
   .coin-select-wrap { flex-shrink: 0; }
   .coin-select-btn { padding: 6px 10px; gap: 8px; }
+  .coin-menu-search { display: none !important; }
   .cs-sep { display: none; }
 
   /* ── Signal engine: compact layer cards ── */
@@ -2583,7 +2584,8 @@ function toggleCoinMenu(){
       menu.style.webkitOverflowScrolling='touch';
     }
     renderCoinMenuList();
-    setTimeout(()=>document.getElementById('coinSearch')?.focus(),50);
+    // Only focus search on desktop — on mobile the keyboard resize shifts fixed elements
+    if(window.innerWidth>480) document.getElementById('coinSearch')?.focus();
   }
 }
 
